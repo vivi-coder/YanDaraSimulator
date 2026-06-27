@@ -1,0 +1,306 @@
+# TEST
+
+=begin
+well, you have it, yandere simulator but in Ruby
+
+#example students
+students = {
+  "Mizuki" => {
+    location: "Outside",
+    rival?: false,
+    talking?: false,
+    looking_at_player?: true,
+    alerted?: false
+  },
+  "Ayano" => {
+    location: "Classroom",
+    rival?: false,
+    talking?: true,
+    looking_at_player?: false,
+    alerted?: false
+  },
+  "Osana" => {
+    location: "Rooftop",
+    rival?: true,
+    talking?: false,
+    looking_at_player?: true,
+    alerted?: true
+  }
+}
+
+
+'please ruby i need this' -vivi
+=end
+
+# Strings
+helplist = ["moveto (location on your floor)", "debug (ONLY FOR DEBUG REASONS)", "talk to (NPC)", "checkroom", "checkphone", "phonerelation (only if phone is open)", "checkfloormap", "stairs (to go up or down floors)"]
+
+# Locations
+
+location1f = ["Outside", "Outside Left", "Outside Right", "Outside Back", "Incinerator", "Main Hallway 1F", "Left Hallway 1F", "Right Hallway 1F"]
+locationclubs1f = ["Cooking Club 1F", "Gaming Club 1F", "Light Music Club 1F", "Photography Club 1F", "Sports Club 1F"]
+
+location2f = ["Main Hallway 2F", "Left Hallway 2F", "Right Hallway 2F"]
+locationclubs2f = ["Art Club 2F", "Drama Club 2F", "Hacking Club 2F", "Music Club 2F", "Social Media Influencers Club 2F"]
+
+location3f = ["Main Hallway 3F", "Left Hallway 3F", "Right Hallway 3F"]
+locationclubs3f = ["Delinquent Club 3F", "Martial Arts Club 3F", "Science Club 3F", "Detective Club 3F", "Occult Club 3F"]
+
+locationroof = ["Rooftop"]
+
+# Students
+
+students = {
+  "Mizuki" => {
+    location: "Outside",
+    rival?: false,
+    talking?: false,
+    looking_at_player?: false,
+    alerted?: false
+  },
+  "Ayano" => {
+    location: "Outside",
+    rival?: false,
+    talking?: false,
+    looking_at_player?: false,
+    alerted?: false
+  },
+  "Osana" => {
+    location: "Outside",
+    rival?: false,
+    talking?: false,
+    looking_at_player?: true,
+    alerted?: true
+  },
+  "Rin" => {
+    location: "Outside",
+    rival?: false,
+    talking?: false,
+    looking_at_player?: true,
+    alerted?: false
+  },
+  "Yuki" => {
+    location: "Outside",
+    rival?: false,
+    talking?: false,
+    looking_at_player?: true,
+    alerted?: false
+  },
+  "Mio" => {
+    location: "Outside",
+    rival?: false,
+    talking?: false,
+    looking_at_player?: true,
+    alerted?: false
+  },
+  "Kaito" => {
+    location: "Outside",
+    rival?: false,
+    talking?: false,
+    looking_at_player?: true,
+    alerted?: false
+  },
+  "Hikaru" => {
+    location: "Outside",
+    rival?: false,
+    talking?: false,
+    looking_at_player?: true,
+    alerted?: false
+  },
+  "Kuro" => {
+    location: "Outside",
+    rival?: false,
+    talking?: false,
+    looking_at_player?: true,
+    alerted?: false
+  },
+  "Suko" => {
+    location: "Outside",
+    rival?: false,
+    talking?: false,
+    looking_at_player?: true,
+    alerted?: false
+  },
+  "Daichi" => {
+    location: "Outside",
+    rival?: false,
+    talking?: false,
+    looking_at_player?: true,
+    alerted?: false
+  }
+}
+
+# Player State
+player_location = "Outside"
+player_floor = "1F"
+
+# Helper Functions
+def get_floor(location, location1f, location2f, location3f, locationclubs1f, locationclubs2f, locationclubs3f, locationroof)
+  return "1F" if (location1f + locationclubs1f).include?(location)
+  return "2F" if (location2f + locationclubs2f).include?(location)
+  return "3F" if (location3f + locationclubs3f).include?(location)
+  return "Roof" if locationroof.include?(location)
+  nil
+end
+
+def get_current_floor_locations(player_floor, location1f, location2f, location3f, locationclubs1f, locationclubs2f, locationclubs3f, locationroof)
+  case player_floor
+  when "1F"
+    location1f + locationclubs1f
+  when "2F"
+    location2f + locationclubs2f
+  when "3F"
+    location3f + locationclubs3f
+  when "Roof"
+    locationroof
+  end
+end
+
+def can_move_to?(location, player_floor, location1f, location2f, location3f, locationclubs1f, locationclubs2f, locationclubs3f, locationroof)
+  current_locations = get_current_floor_locations(player_floor, location1f, location2f, location3f, locationclubs1f, locationclubs2f, locationclubs3f, locationroof)
+  current_locations.include?(location)
+end
+
+def go_upstairs(current_floor)
+  case current_floor
+  when "1F"
+    puts "You climb the stairs to the second floor."
+    "2F"
+  when "2F"
+    puts "You climb the stairs to the third floor."
+    "3F"
+  when "3F"
+    puts "You climb the stairs to the rooftop."
+    "Roof"
+  when "Roof"
+    puts "You're already on the roof! You can't go higher."
+    "Roof"
+  end
+end
+
+def go_downstairs(current_floor)
+  case current_floor
+  when "Roof"
+    puts "You climb down the stairs to the third floor."
+    "3F"
+  when "3F"
+    puts "You climb down the stairs to the second floor."
+    "2F"
+  when "2F"
+    puts "You climb down the stairs to the first floor."
+    "1F"
+  when "1F"
+    puts "You're already on the first floor!"
+    "1F"
+  end
+end
+
+# Intro
+puts "You Arrive At The New High School"
+sleep(0.5)
+puts "But now theres this boy you see"
+sleep(0.5)
+puts "."
+sleep(1)
+puts "."
+sleep(1)
+puts "."
+sleep(1)
+puts "You really like him"
+sleep(0.5)
+puts "Now.. There's an issue"
+sleep(0.5)
+puts "Lets say.. Other Girls, Certain Girls like him too~"
+sleep(0.5)
+puts "But..."
+sleep(1)
+puts "He's yours.. And only.. Yours.."
+sleep(2)
+puts "Kill."
+sleep(1)
+puts "Your."
+sleep(1)
+puts "Enemy."
+
+# Game Loop
+puts "Insert your move, type 'help' for moves"
+
+loop do
+  input = gets.chomp
+
+  if input == "help"
+    puts "Your possible moves:"
+    helplist.each { |move| puts "  - #{move}" }
+    puts ""
+    
+  elsif input.start_with?("moveto ")
+    destination = input.sub("moveto ", "").strip
+    
+    if can_move_to?(destination, player_floor, location1f, location2f, location3f, locationclubs1f, locationclubs2f, locationclubs3f, locationroof)
+      player_location = destination
+      puts "You moved to: #{player_location}"
+      puts ""
+    else
+      puts "You can't go there! That location is not on #{player_floor}."
+      puts "Type 'checkfloormap' to see available locations on your current floor."
+      puts ""
+    end
+
+  elsif input == "stairs"
+    puts "Go up or down?"
+    stairs_direction = gets.chomp.downcase
+    if stairs_direction == "up"
+      player_floor = go_upstairs(player_floor)
+      player_location = get_current_floor_locations(player_floor, location1f, location2f, location3f, locationclubs1f, locationclubs2f, locationclubs3f, locationroof).first
+      puts "You are now at: #{player_location}"
+      puts ""
+    elsif stairs_direction == "down"
+      player_floor = go_downstairs(player_floor)
+      player_location = get_current_floor_locations(player_floor, location1f, location2f, location3f, locationclubs1f, locationclubs2f, locationclubs3f, locationroof).first
+      puts "You are now at: #{player_location}"
+      puts ""
+    else
+      puts "Invalid direction!"
+      puts ""
+    end
+
+  elsif input == "checkfloormap"
+    current_locations = get_current_floor_locations(player_floor, location1f, location2f, location3f, locationclubs1f, locationclubs2f, locationclubs3f, locationroof)
+    puts "=== #{player_floor} Locations ==="
+    current_locations.each_with_index do |location, index|
+      puts "#{index + 1}. #{location}"
+    end
+    puts "====================="
+    puts ""
+
+  elsif input == "debug"
+    puts "=== DEBUG INFO ==="
+    puts "Current Location: #{player_location}"
+    puts "Current Floor: #{player_floor}"
+    puts "Students: #{students.keys.join(", ")}"
+    puts "==================="
+    puts ""
+
+  elsif input.start_with?("talk to ")
+    npc_name = input.sub("talk to ", "").strip
+    if students.key?(npc_name)
+      puts "You talked to #{npc_name}"
+      puts ""
+    else
+      puts "That person doesn't exist!"
+      puts ""
+    end
+
+  elsif input == "checkroom"
+    puts "You are in: #{player_location}"
+    puts ""
+
+  elsif input == "checkphone"
+    puts "You opened your phone."
+    puts ""
+
+  else
+    puts "Unknown command. Type 'help' for a list of moves."
+    puts ""
+  end
+end
